@@ -1,19 +1,23 @@
 
 
 def north(x, y):
+	''' Move north '''
 	return x, y+ 1
 
 def east(x, y):
+	''' Move east'''
 	return x + 1, y
 
 def west(x, y):
+	''' Move west'''
 	return x - 1, y
 
 def south(x, y):
+	''' Move south'''
 	return x, y - 1
 
 def did_i_fall(x, y, upper_right, lower_left):
-	''' check if the rover has gone over the edge'''
+	''' Check if the rover has gone over the edge'''
 	if x < lower_left[0] or x > upper_right[0]:
 		return True
 	elif y < lower_left[1] or y > upper_right[1]:
@@ -21,7 +25,7 @@ def did_i_fall(x, y, upper_right, lower_left):
 	return False
 
 def standardise(tuples):
-	''' convertes the numbers into int from the string '''
+	''' Convertes the numbers into int from the string '''
 	if len(tuples) == 3:
 		x,y,F = tuples
 		return (int(x), int(y), F)
@@ -30,7 +34,7 @@ def standardise(tuples):
 		return (int(x), int(y))
 
 def track_rover(rover_position, rover_instruction, upper_right, lower_left):
-	''' tracks the movement of the rover based on the instruction '''
+	''' Tracks the movement of the rover based on the instruction '''
 
 	x, y, Facing = rover_position
 	if not rover_instruction:
@@ -39,10 +43,12 @@ def track_rover(rover_position, rover_instruction, upper_right, lower_left):
 		instruction = rover_instruction[0]
 
 		if instruction is 'M':
+			# Move
 			x, y = move[Facing](x, y)
 			if did_i_fall(x, y, upper_right, lower_left):
 				return 'I Fell'
 		else:
+			# Rotate
 			rotate = lambda Facing, instruction: left[Facing] if instruction is 'L' else right[Facing]
 			Facing = rotate(Facing, instruction)
 
